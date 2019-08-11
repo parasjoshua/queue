@@ -66,8 +66,13 @@ class StatusController extends Controller
     {
         $model = new Status();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->date_added = date("Y-m-d");
+            $model->added_by = Yii::$app->user->identity->id;
+            $model->save();
+            // print_r($model->getErrors());
+            // exit;
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -86,8 +91,11 @@ class StatusController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->date_added = date("Y-m-d");
+            $model->added_by = Yii::$app->user->identity->id;
+            $model->save();
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [

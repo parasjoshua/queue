@@ -19,6 +19,11 @@ return [
             'cost' => 12,
             'admins' => ['joshua']
         ],
+
+        'gridview' => [
+            'class' => '\kartik\grid\Module',
+            
+        ],
         'rbac' => 'dektrium\rbac\RbacWebModule',
     ],
 ];

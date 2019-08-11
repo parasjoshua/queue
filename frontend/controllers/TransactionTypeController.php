@@ -4,10 +4,13 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\TransactionType;
+use frontend\models\Department;
 use frontend\models\TransactionTypeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use frontend\models\Status;
+use yii\helpers\ArrayHelper;
 
 /**
  * TransactionTypeController implements the CRUD actions for TransactionType model.
@@ -65,13 +68,22 @@ class TransactionTypeController extends Controller
     public function actionCreate()
     {
         $model = new TransactionType();
+        $status = ArrayHelper::map(Status::find()->all(),'id','description');
+        $deptlist = ArrayHelper::map(Department::find()->all(),'id','name');
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->date_added = date("Y-m-d");
+            $model->added_by = Yii::$app->user->identity->id;
+            $model->save();
+            // print_r($model->getErrors());
+            // exit;
+            return $this->redirect(['index']);
         }
-
         return $this->render('create', [
             'model' => $model,
+            'status' => $status,
+            'deptlist' => $deptlist,
+            
         ]);
     }
 
@@ -85,13 +97,23 @@ class TransactionTypeController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $status = ArrayHelper::map(Status::find()->all(),'id','description');
+        $deptlist = ArrayHelper::map(Department::find()->all(),'id','name');
+        
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->date_added = date("Y-m-d");
+            $model->added_by = Yii::$app->user->identity->id;
+            $model->save();
+            // print_r($model->getErrors());
+            // exit;
+            return $this->redirect(['index']);
         }
-
-        return $this->render('update', [
+        return $this->render('create', [
             'model' => $model,
+            'status' => $status,
+            'deptlist' => $deptlist,
+            
         ]);
     }
 

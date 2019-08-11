@@ -45,10 +45,10 @@ class Transaction extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'emp_id' => 'Emp ID',
+            'emp_id' => 'Employee',
             'date_added' => 'Date Added',
-            'status_id' => 'Status ID',
-            'predefined_trans_id' => 'Predefined Trans ID',
+            'status_id' => 'Status',
+            'predefined_trans_id' => 'Predefined Process',
         ];
     }
 
@@ -58,5 +58,10 @@ class Transaction extends \yii\db\ActiveRecord
     public function getPredefinedProcess()
     {
         return $this->hasOne(PredefinedProcess::className(), ['id' => 'predefined_trans_id']);
+    }
+
+    public function getEmployee()
+    {
+        return $this->hasOne(Employee::className(), ['employee_count' => 'emp_ids']);
     }
 }

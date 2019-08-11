@@ -14,6 +14,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'type_id')->textInput() ?>
 
+	<?= $form->field($model, 'description')->textInput() ?>
+
     <?= $form->field($model, 'step_num')->textInput() ?>
 
     <?= $form->field($model, 'date_added')->textInput() ?>

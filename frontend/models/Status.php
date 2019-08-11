@@ -31,8 +31,8 @@ class Status extends \yii\db\ActiveRecord
     {
         return [
             [['description', 'date_added', 'added_by'], 'required'],
-            [['description'], 'string'],
-            [['date_added', 'added_by'], 'integer'],
+            [['date_added','description'], 'string'],
+            [['added_by'], 'integer'],
         ];
     }
 

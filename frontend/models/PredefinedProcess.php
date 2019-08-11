@@ -35,6 +35,7 @@ class PredefinedProcess extends \yii\db\ActiveRecord
             [['type_id', 'step_num', 'date_added', 'added_by'], 'required'],
             [['type_id', 'step_num', 'added_by'], 'integer'],
             [['date_added'], 'safe'],
+            [['description'], 'string'],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => TransactionType::className(), 'targetAttribute' => ['type_id' => 'id']],
         ];
     }
@@ -47,7 +48,7 @@ class PredefinedProcess extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'type_id' => 'Type ID',
-            'step_num' => 'Step Num',
+            'step_num' => 'Step No',
             'date_added' => 'Date Added',
             'added_by' => 'Added By',
         ];

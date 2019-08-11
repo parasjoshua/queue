@@ -35,9 +35,9 @@ class TransactionType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'status_id', 'department', 'window_num', 'added_by'], 'integer'],
+            [['status_id', 'department', 'window_num', 'added_by'], 'integer'],
             [['description', 'status_id', 'department', 'window_num', 'date_added', 'added_by'], 'required'],
-            [['description'], 'string'],
+            [['code','description'], 'string'],
             [['date_added'], 'safe'],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::className(), 'targetAttribute' => ['status_id' => 'id']],
         ];
@@ -52,9 +52,9 @@ class TransactionType extends \yii\db\ActiveRecord
             'id' => 'ID',
             'code' => 'Code',
             'description' => 'Description',
-            'status_id' => 'Status ID',
+            'status_id' => 'Status',
             'department' => 'Department',
-            'window_num' => 'Window Num',
+            'window_num' => 'Window No.',
             'date_added' => 'Date Added',
             'added_by' => 'Added By',
         ];
@@ -74,5 +74,10 @@ class TransactionType extends \yii\db\ActiveRecord
     public function getStatus()
     {
         return $this->hasOne(Status::className(), ['id' => 'status_id']);
+    }
+
+    public function getDepartmentname()
+    {
+        return $this->hasOne(Department::className(), ['id' => 'department']);
     }
 }

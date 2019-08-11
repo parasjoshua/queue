@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\TransactionType */
 
-$this->title = $model->id;
+$this->title = $model->code;
 $this->params['breadcrumbs'][] = ['label' => 'Transaction Types', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -29,14 +29,29 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            
             'code',
             'description:ntext',
-            'status_id',
-            'department',
+            [
+                'attribute' => 'status_id',
+                'value' => function($model){
+                    return $model->status->description;
+                }
+            ],
+             [
+                'attribute' => 'department',
+                'value' => function($model){
+                    return $model->departmentname->name;
+                }
+            ],
             'window_num',
-            'date_added',
-            'added_by',
+            'date_added:date',
+             [
+                'attribute' => 'added_by',
+                'value' => function($model){
+                    return Yii::$app->user->identity->profile->name;
+                }
+            ],
         ],
     ]) ?>
 

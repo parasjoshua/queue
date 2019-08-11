@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\TransactionType */
@@ -16,15 +17,27 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'status_id')->textInput() ?>
+     <?= $form->field($model, 'status_id')->widget(Select2::classname(), [
+            'data' => $status,
+            'language' => 'en',
+            'options' => ['placeholder' => 'Select Status'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]); 
+    ?>
 
-    <?= $form->field($model, 'department')->textInput() ?>
+     <?= $form->field($model, 'department')->widget(Select2::classname(), [
+            'data' => $deptlist,
+            'language' => 'en',
+            'options' => ['placeholder' => 'Select Department'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]); 
+    ?>
 
     <?= $form->field($model, 'window_num')->textInput() ?>
-
-    <?= $form->field($model, 'date_added')->textInput() ?>
-
-    <?= $form->field($model, 'added_by')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

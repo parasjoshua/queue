@@ -4,11 +4,15 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Transaction;
+use frontend\models\Employee;
+use frontend\models\PredefinedProcess;
+use frontend\models\TransactionType;
+use yii\helpers\ArrayHelper;
 use frontend\models\TransactionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use frontend\models\Status;
 /**
  * TransactionController implements the CRUD actions for Transaction model.
  */
@@ -62,18 +66,6 @@ class TransactionController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new Transaction();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
 
     /**
      * Updates an existing Transaction model.
@@ -85,13 +77,22 @@ class TransactionController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $status = ArrayHelper::map(Status::find()->all(),'id','description');
+        $emplist = ArrayHelper::map(Employee::find()->all(),'employee_count','employee_name');
+        $predefined = ArrayHelper::map(PredefinedProcess::find()->all(),'id','description');
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+         if ($model->load(Yii::$app->request->post())) {
+            $model->date_added = date("Y-m-d");
+            $model->save();
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'status' => $status,
+            'emplist' => $emplist,
+            'predefined' => $predefined
+
         ]);
     }
 

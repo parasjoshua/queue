@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\PredefinedProcess */
 
-$this->title = $model->id;
+$this->title = $model->description;
 $this->params['breadcrumbs'][] = ['label' => 'Predefined Processes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'type_id',
+            'description',
             'step_num',
             'date_added',
             'added_by',
